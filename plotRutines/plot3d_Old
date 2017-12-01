@@ -1,0 +1,4 @@
+#!/bin/bash 
+export NCARG_ROOT=/usr/local/ncl-6.2.1
+export PATH=$NCARG_ROOT/bin:$PATH
+plot3d_exec $1 $2 $3

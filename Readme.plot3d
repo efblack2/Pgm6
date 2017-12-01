@@ -1,0 +1,157 @@
+1.- Sequence to create plots for idt (ncl debe estar corriendo para que idt funcione)
+
+efblack@blackEngineering ~/Development/CSE566_2016/Homework_Code/Pgm6/serialVersion $ plot3d
+---------------------------------------------
+Plot3d, 12/19/14 update1                          
+ATMS 502/CSE 566, Fall 2014, Univ.IL.             
+---------------------------------------------
+
+Should this program call IDT directly? [enter y/n/batch, return=YES]: y
+Enter title for all plots [hit return for none]: testD
+Enter dx (meters) [return= 50]: 
+ Reading C unformatted data file; dimensions ( 33, 33, 16)
+ Scanning T 
+ Reading field    1: T   ( 33, 33, 16) for T=   0.0
+ Reading field    2: U   ( 33, 33, 16) for T=   0.0
+ Reading field    3: V   ( 33, 33, 16) for T=   0.0
+ Reading field    4: W   ( 33, 33, 16) for T=   0.0
+ Reading field    5: P   ( 33, 33, 16) for T=   0.0
+ Reading field    6: T   ( 33, 33, 16) for T= 100.0
+ Reading field    7: U   ( 33, 33, 16) for T= 100.0
+ Reading field    8: V   ( 33, 33, 16) for T= 100.0
+ Reading field    9: W   ( 33, 33, 16) for T= 100.0
+ Reading field   10: P   ( 33, 33, 16) for T= 100.0
+ Reading field   11: T   ( 33, 33, 16) for T= 200.0
+ Reading field   12: U   ( 33, 33, 16) for T= 200.0
+ Reading field   13: V   ( 33, 33, 16) for T= 200.0
+ Reading field   14: W   ( 33, 33, 16) for T= 200.0
+ Reading field   15: P   ( 33, 33, 16) for T= 200.0
+ Reading field   16: T   ( 33, 33, 16) for T= 300.0
+ Reading field   17: U   ( 33, 33, 16) for T= 300.0
+ Reading field   18: V   ( 33, 33, 16) for T= 300.0
+ Reading field   19: W   ( 33, 33, 16) for T= 300.0
+ Reading field   20: P   ( 33, 33, 16) for T= 300.0
+ Reading field   21: T   ( 33, 33, 16) for T= 400.0
+ Reading field   22: U   ( 33, 33, 16) for T= 400.0
+ Reading field   23: V   ( 33, 33, 16) for T= 400.0
+ Reading field   24: W   ( 33, 33, 16) for T= 400.0
+ Reading field   25: P   ( 33, 33, 16) for T= 400.0
+
+    0.0 :  T    U    V    W    P   
+  100.0 :  T    U    V    W    P   
+  200.0 :  T    U    V    W    P   
+  300.0 :  T    U    V    W    P   
+  400.0 :  T    U    V    W    P   
+
+Enter fields to plot, "www" for web pages & GIFs, "?" for help, or "exit" to quit: T
+Enter list of types of plots to make, "all" for all plot types, "?" for help, or "exit" to quit: 3d
+Enter x,y,z eye position for 3D plots, "?" for help [return=default 9,3,10 ]: 
+Enter isosurface value(s) (use +/-VALUE for two surfaces), for fields, or 'auto': T   
++/-2
+ Opening NCAR graphics
+ Reading data
+ Time    0.0:     T +/-     2.00 SURFACES  min=  -20.00 at ( 17, 17,  9); max=    0.00 at (  1,  1,  1)      
+ Time  100.0:     T +/-     2.00 SURFACES  min=  -19.82 at ( 17, 17,  5); max=    0.06 at ( 25, 17,  5)      
+ Time  200.0:     T +/-     2.00 SURFACES  min=  -14.67 at ( 13, 14,  1); max=    0.40 at ( 15,  9,  2)      
+ Time  300.0:     T +/-     2.00 SURFACES  min=  -11.09 at (  8, 10,  1); max=    0.54 at ( 17, 25,  4)      
+ Time  400.0:     T +/-     2.00 SURFACES  min=   -8.01 at (  5,  7,  1); max=    0.62 at ( 22, 13,  4)      
+  
+-rw-r--r-- 1 efblack efblack 103680 May 14 08:18 gmeta
+           5 plots created -- calling IDT
+To rename "gmeta" enter name now, or hit return to just continue: 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.- Sequence to create plots for visit (usar netcdf for Enter fields to plot, "www" for web pages & GIFs, "?" for help, or "exit" to quit:)
+
+efblack@blackEngineering ~/Development/CSE566_2016/Homework_Code/Pgm6/serialVersion $ plot3d
+---------------------------------------------
+Plot3d, 12/19/14 update1                          
+ATMS 502/CSE 566, Fall 2014, Univ.IL.             
+---------------------------------------------
+
+Should this program call IDT directly? [enter y/n/batch, return=YES]: no
+Enter title for all plots [hit return for none]: testD
+Enter dx (meters) [return= 50]: 
+ Reading C unformatted data file; dimensions ( 33, 33, 16)
+ Scanning T 
+ Reading field    1: T   ( 33, 33, 16) for T=   0.0
+ Reading field    2: U   ( 33, 33, 16) for T=   0.0
+ Reading field    3: V   ( 33, 33, 16) for T=   0.0
+ Reading field    4: W   ( 33, 33, 16) for T=   0.0
+ Reading field    5: P   ( 33, 33, 16) for T=   0.0
+ Reading field    6: T   ( 33, 33, 16) for T= 100.0
+ Reading field    7: U   ( 33, 33, 16) for T= 100.0
+ Reading field    8: V   ( 33, 33, 16) for T= 100.0
+ Reading field    9: W   ( 33, 33, 16) for T= 100.0
+ Reading field   10: P   ( 33, 33, 16) for T= 100.0
+ Reading field   11: T   ( 33, 33, 16) for T= 200.0
+ Reading field   12: U   ( 33, 33, 16) for T= 200.0
+ Reading field   13: V   ( 33, 33, 16) for T= 200.0
+ Reading field   14: W   ( 33, 33, 16) for T= 200.0
+ Reading field   15: P   ( 33, 33, 16) for T= 200.0
+ Reading field   16: T   ( 33, 33, 16) for T= 300.0
+ Reading field   17: U   ( 33, 33, 16) for T= 300.0
+ Reading field   18: V   ( 33, 33, 16) for T= 300.0
+ Reading field   19: W   ( 33, 33, 16) for T= 300.0
+ Reading field   20: P   ( 33, 33, 16) for T= 300.0
+ Reading field   21: T   ( 33, 33, 16) for T= 400.0
+ Reading field   22: U   ( 33, 33, 16) for T= 400.0
+ Reading field   23: V   ( 33, 33, 16) for T= 400.0
+ Reading field   24: W   ( 33, 33, 16) for T= 400.0
+ Reading field   25: P   ( 33, 33, 16) for T= 400.0
+
+    0.0 :  T    U    V    W    P   
+  100.0 :  T    U    V    W    P   
+  200.0 :  T    U    V    W    P   
+  300.0 :  T    U    V    W    P   
+  400.0 :  T    U    V    W    P   
+
+Enter fields to plot, "www" for web pages & GIFs, "?" for help, or "exit" to quit: netcdf <<<<---- this is the key to success
+
+Creating NetCDF data set; enter name of NetCDF file [return=run.nc]: testD.nc 
+  5 times available; range:    0.00  400.00
+Enter first time, last time, and interval: 0,400,50
+NOTE -- time not available: T=  50.0
+NOTE -- time not available: T= 150.0
+NOTE -- time not available: T= 250.0
+NOTE -- time not available: T= 350.0
+   5 times found -- range:    0  400
+ Opening NCAR graphics
+ Reading data
+Storing to testD.nc: T    T=   0.0
+Storing to testD.nc: U    T=   0.0
+Storing to testD.nc: V    T=   0.0
+Storing to testD.nc: W    T=   0.0
+Storing to testD.nc: P    T=   0.0
+Storing to testD.nc: vort T=   0.0
+Storing to testD.nc: T    T= 100.0
+Storing to testD.nc: U    T= 100.0
+Storing to testD.nc: V    T= 100.0
+Storing to testD.nc: W    T= 100.0
+Storing to testD.nc: P    T= 100.0
+Storing to testD.nc: vort T= 100.0
+Storing to testD.nc: T    T= 200.0
+Storing to testD.nc: U    T= 200.0
+Storing to testD.nc: V    T= 200.0
+Storing to testD.nc: W    T= 200.0
+Storing to testD.nc: P    T= 200.0
+Storing to testD.nc: vort T= 200.0
+Storing to testD.nc: T    T= 300.0
+Storing to testD.nc: U    T= 300.0
+Storing to testD.nc: V    T= 300.0
+Storing to testD.nc: W    T= 300.0
+Storing to testD.nc: P    T= 300.0
+Storing to testD.nc: vort T= 300.0
+Storing to testD.nc: T    T= 400.0
+Storing to testD.nc: U    T= 400.0
+Storing to testD.nc: V    T= 400.0
+Storing to testD.nc: W    T= 400.0
+Storing to testD.nc: P    T= 400.0
+Storing to testD.nc: vort T= 400.0
+ Closing NetCDF file.
+  
+-rw-r--r-- 1 efblack efblack 2880 May 14 08:22 gmeta
+           0  plots ready; use IDT in another window
+
+Enter fields to plot, "www" for web pages & GIFs, "?" for help, or "exit" to quit: exit
+
+
