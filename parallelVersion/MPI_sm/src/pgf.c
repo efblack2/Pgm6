@@ -4,7 +4,6 @@
 #include "myMPI.h"
 
 void pgf(real ***restrict p3,real ***restrict u,real ***restrict v,real ***restrict w,real ***restrict t,real ***restrict p1,real *ro_u,real *ro_w,real dx,real dy,real dz,int i1,int i2,int j1,int j2,int k1,int k2,real tstep,real g,real thetaBar, real cs2, int bcw, MPI_Comm sm_comm, MPI_Win *sm_win_u,MPI_Win *sm_win_v,MPI_Win *sm_win_w)  
-
 {
 
     int myRank, commSize;

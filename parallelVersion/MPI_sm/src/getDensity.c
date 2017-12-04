@@ -29,5 +29,5 @@ void getDensity(real *ro_u,real *ro_w,int k1,int k2,real dz,real g,real thetaBar
     */
     
     //z+=0.5*dz;
-    ro_w[k2+1] = 0.0; ;//Density(z,g,thetaBar);
+    ro_w[k2+1] = 0.0; //Density(z,g,thetaBar);
 } // end of getDensity() //

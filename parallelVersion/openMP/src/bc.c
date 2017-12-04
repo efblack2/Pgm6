@@ -128,4 +128,3 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
     } // end for //
 
 } // end of bc() //
-

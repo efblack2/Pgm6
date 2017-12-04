@@ -72,5 +72,4 @@ void bc4T(real ***t1,real ***t2, int i1,int i2,int j1,int j2,int k1,int k2,int b
             } // end for //
         } // end for //
     } // end for //
-
 } // end of bc4T() //

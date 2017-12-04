@@ -1,7 +1,6 @@
 #include <mpi.h> 
 #include "real.h"
 #include "myMPI.h"
-
 /*
  * ============================ bc =====================
  * BC sets the boundary conditions
@@ -38,7 +37,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
 
     //  East and West faces for u  //
     //#pragma omp for nowait
@@ -50,7 +48,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
 
     //  North and South faces for u (periodic) //
     //#pragma omp for nowait
@@ -80,7 +77,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
 
 
     //  East and West faces for v  //
@@ -93,8 +89,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
-
+ 
     //  North and South faces for v (periodic) //
     //#pragma omp for nowait
     for (int level=kk1; level<=kk2; ++level) {
@@ -110,7 +105,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
 /////////////////////////////////////////////////////////////////////////////
 
 
-
     //  Top and bottom faces for w //
     //#pragma omp for nowait
     for (int row=jj1; row<=jj2; ++row) {
@@ -123,7 +117,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
 
 
     const int kk3 = BLOCK_LOW (myRank,commSize,(2+k2-k1)) + bcw;
@@ -140,7 +133,6 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
             } // end for //
         } // end for //
     } // end for //
-    //MPI_Barrier(sm_comm);
 
 
     //  North and South faces for w  (periodic) //

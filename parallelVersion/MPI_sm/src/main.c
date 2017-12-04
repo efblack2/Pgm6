@@ -482,7 +482,7 @@ int main(int argc, char *argv[])
         //  . . . Compute values at next step                           //
 
         advection(t2,u3,v3,w3,t1,u2,v2,w2,dx,dy,dz,dt,i1,i2,j1,j2,k1,k2,nxdim,nydim,nzdim,tstep,advection_type,sm_comm,&sm_win_t2);
-        MPI_Win_sync(sm_win_t2);
+        //MPI_Win_sync(sm_win_t2);  /// OOOOOJJJJOOOO///
         MPI_Win_sync(sm_win_u3);
         MPI_Win_sync(sm_win_v3);
         MPI_Win_sync(sm_win_w3);

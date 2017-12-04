@@ -27,7 +27,7 @@ void ic(real ***t ,real ***u ,real ***v ,real ***w ,real *ro_u,real *ro_w,real d
 {
 
 
-    /* initial condition for p field */
+    // initial condition for p field //
 	real z=0.5*dz;
     for (int level=k1; level<=k2; ++level, z+=dz) {
         real y=0.5*dy;
@@ -35,37 +35,37 @@ void ic(real ***t ,real ***u ,real ***v ,real ***w ,real *ro_u,real *ro_w,real d
             real x=0.5*dx;    
             for (int col=i1; col<=i2; ++col, x+=dx) {
                 
-                /* initial condition for scalar "V" field */
+                // initial condition for scalar "V" field //
                 for (int m=0; m<2; m++) {
                     real rm = sqrt( pow( (x-x0[m])/rx[m],2.0) + pow( (y-y0[m])/ry[m],2.0)  + pow((z-z0[m])/rz[m],2.0));
                     if (rm <= 1.0) {
                         v[level][row][col] = 0.5*deltaV[m] *(cos(rm*M_PI)+1); 
-                        /*printf("i,j,k, deltaV: %d %d %d %f\n", i,j,k,deltaV[m]);*/
+                        // printf("i,j,k, deltaV: %d %d %d %f\n", i,j,k,deltaV[m]); //
                     } // end if //
                 } // end for //
                 
                 //real const uPertur=DELTAU;
                 u[level][row][col] =  uPertur*( (real) rand()/(RAND_MAX + 1.0)) -0.5*uPertur;
-                /* uPertur*((real) rand()/(RAND_MAX + 1.0)) - upertur*0.5 ;*/
-                /* initial condition for scalar "V" field */
+                // uPertur*((real) rand()/(RAND_MAX + 1.0)) - upertur*0.5 ;//
+                // initial condition for scalar "V" field //
                 for (int m=0; m<2; m++) {
                     real rm = sqrt( pow( (x-x0[m])/rx[m],2.0) + pow( (y-y0[m])/ry[m],2.0)  + pow((z-z0[m])/rz[m],2.0));
                     if (rm <= 1.0) {
                         v[level][row][col] = 0.5*deltaV[m] *(cos(rm*M_PI)+1); 
-                        /*printf("i,j,k, deltaV: %d %d %d %f\n", i,j,k,deltaV[m]);*/
+                        // printf("i,j,k, deltaV: %d %d %d %f\n", i,j,k,deltaV[m]); //
                     } // end if //
                 } // end for //
             } // end for //
             u[level][row][i2+1] = u[level][row][i2];
         } // end for //
     } // end for //
-    
+
     for (int level=k1; level<=k2; ++level) {
         for (int col=i1; col<=i2; ++col) {
             v[level][j2+1][col] = v[level][j2][col];
         } // end for //
     } // end for //
-    
+
     for (int row=j1; row<=j2; ++row) {
         for (int col=i1; col<=i2; ++col) {
             w[k2+1][row][col] = w[k2][row][col];
@@ -73,7 +73,7 @@ void ic(real ***t ,real ***u ,real ***v ,real ***w ,real *ro_u,real *ro_w,real d
     } // end for //
 
     
-    /* initial condition for scalar "q" field */
+    // initial condition for scalar "q" field //
 	z=0.5*dz;
     for (int level=k1; level<=k2; ++level, z+=dz) {
     	real y=0.5*dy;
