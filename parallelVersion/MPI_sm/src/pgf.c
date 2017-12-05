@@ -55,7 +55,7 @@ void pgf(real ***restrict p3,real ***restrict u,real ***restrict v,real ***restr
     MPI_Win_sync(*sm_win_w);
     MPI_Barrier(sm_comm);
 
-    bc(u,v,w,i1,i2,j1,j2,k1,k2,bcw,sm_comm);
+    bc(u,v,w,i1,i2,j1,j2,k1,k2,bcw,myRank,commSize);
     
     MPI_Win_sync(*sm_win_u);
     MPI_Win_sync(*sm_win_v);

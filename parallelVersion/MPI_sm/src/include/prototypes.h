@@ -8,8 +8,8 @@ void ic(real ***t ,real ***u, real ***v,real ***w ,real *ro_u,real *ro_w,real dx
 
 //void ic(float **t ,float **p ,float **u ,float **w ,float *ro_u,float *ro_w,float dx,float  dz,int i1,int i2,int k1,int k2,int bcW,int nx,int nz,float *x0,float *z0, float *deltaTheta,float  thetaBar,float rx,float rz,float g);
 
-void bc4T(real ***t1, real ***t2, int i1,int i2,int j1,int j2,int k1,int k2,int bcw,MPI_Comm sm_comm);
-void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2,int bcw,MPI_Comm sm_comm);
+void bc4T(real ***t1, real ***t2, int i1,int i2,int j1,int j2,int k1,int k2,int bcw,int rank, int size);
+void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2,int bcw,int rank, int size);
 
 
 

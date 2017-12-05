@@ -14,11 +14,8 @@
  *				extra 'ghost' zones/points
  */
 
-void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2,int bcw, MPI_Comm sm_comm)
+void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2,int bcw, int myRank, int commSize)
 {
-    int myRank, commSize;
-    MPI_Comm_rank(sm_comm,&myRank);
-    MPI_Comm_size(sm_comm,&commSize);
 
     const int jj1 = BLOCK_LOW (myRank,commSize,(1+j2-j1)) + bcw;
     const int jj2 = BLOCK_HIGH(myRank,commSize,(1+j2-j1)) + bcw;

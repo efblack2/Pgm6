@@ -319,8 +319,8 @@ int main(int argc, char *argv[])
     //#pragma omp parallel 
     
     //nthreads = omp_get_num_threads();
-    bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width,sm_comm);
-    bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width,sm_comm);
+    bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width,myRank,commSize);
+    bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width,myRank,commSize);
     
     MPI_Win_sync(sm_win_u1);
     MPI_Win_sync(sm_win_v1);
@@ -503,7 +503,7 @@ int main(int argc, char *argv[])
         pgf(p3,u3,v3,w3,t2,p1,ro_u,ro_w,dx,dy,dz,i1,i2,j1,j2,k1,k2,tstep, g,thetaBar,cs*cs,bc_width,sm_comm,&sm_win_u3,&sm_win_v3,&sm_win_w3);
 
         //  . . . Set boundary conditions for T                     //
-        bc4T(t2,t1,i1,i2,j1,j2,k1,k2,bc_width,sm_comm);
+        bc4T(t2,t1,i1,i2,j1,j2,k1,k2,bc_width,myRank,commSize);
         MPI_Win_sync(sm_win_p3);
         MPI_Win_sync(sm_win_t1);
         MPI_Win_sync(sm_win_t2);
