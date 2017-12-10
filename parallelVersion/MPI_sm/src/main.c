@@ -442,6 +442,10 @@ int main(int argc, char *argv[])
     const int lk4 = BLOCK_HIGH(myRank,commSize,(nzdim+1));
     //printf("myRank: %3d, lk3: %3d, lk4: %3d, ndimz: %3d\n", myRank, lk3,lk4, nzdim);        
 
+    const int kk1 = BLOCK_LOW (myRank,commSize,(1+k2-k1)) + bc_width;
+    const int kk2 = BLOCK_HIGH(myRank,commSize,(1+k2-k1)) + bc_width;
+    //printf("myRank: %3d, --> kk1: %3d, kk2: %3d, k1: %3d, k2: %3d\n", myRank,kk1,kk2, k1,k2);
+
     tstep=dt;     
     for (int n=1 ; n<=nstep; n++) {
     
@@ -489,9 +493,6 @@ int main(int argc, char *argv[])
         MPI_Barrier(sm_comm);
         
         
-        const int kk1 = BLOCK_LOW (myRank,commSize,(1+k2-k1)) + bc_width;
-        const int kk2 = BLOCK_HIGH(myRank,commSize,(1+k2-k1)) + bc_width;
-        //printf("myRank: %3d, --> kk1: %3d, kk2: %3d, k1: %3d, k2: %3d\n", myRank,kk1,kk2, k1,k2);
         
         diffusion(t2,u3,v3,w3,t1,u1,v1,w1,dx*dx,dy*dy,dz*dz,i1,i2,j1,j2,kk1,kk2,dt,tstep,ku,kv,kw,kt);// KU,KV,KW,KT);
         MPI_Win_sync(sm_win_t2);
