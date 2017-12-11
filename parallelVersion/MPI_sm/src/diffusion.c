@@ -34,7 +34,7 @@ void diffusion(real ***t,real ***u,real ***v,real ***w,real ***restrict tt,real 
                 w[level][row][col] += tstep*Kw*( 
                                     (ww[level][row][col+1] -2*ww[level][row][col] + ww[level][row][col-1]) / (dx2) + 
                                     (ww[level][row+1][col] -2*ww[level][row][col] + ww[level][row-1][col]) / (dy2) +
-                                    (ww[level+1][row][col] -2*ww[level][row][col] + ww[level-1][row][col]) / (dz2) );                                    
+                                    (ww[level+1][row][col] -2*ww[level][row][col] + ww[level-1][row][col]) / (dz2) );
             } // end for //
         } // end for //
     }  // end for //
