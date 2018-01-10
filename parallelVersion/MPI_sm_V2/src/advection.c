@@ -99,7 +99,8 @@ void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, re
     free(fld);
 
     
-     // advection in z //
+    // advection in z //
+    // OOOOOJJJJOOOO aqui en todo este loop
     qIn =  malloc(nzdim*sizeof(real));
     qOut = malloc(nzdim*sizeof(real));
     fld =  malloc(nzdim*sizeof(real));
@@ -107,9 +108,15 @@ void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, re
     //#pragma omp for
     for (int row=jj1; row<=jj2; ++row) {	
         for (int col=i1; col<=i2; ++col) {
+        
+            // OOOOOJJJJOOOO aqui
             for (int level=0; level<nzdim; ++level) {	
                 qIn[level] = q2[level][row][col];
             } // end for //
+            // OOOOOJJJJOOOO aqui
+            
+            
+            
             if (advection_type != 'p') {
                 for (int level=k1; level<=k2; ++level) {
                     fld[level] = 0.5*(w[level][row][col] + w[level+1][row][col]);  

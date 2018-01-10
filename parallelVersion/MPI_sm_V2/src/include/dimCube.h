@@ -7,18 +7,20 @@
 real*** dimCube(int level, int row, int col, MPI_Win *sm_win, int myRank, MPI_Comm *sm_comm) 
 {
 
+    MPI_Info myInfo;
+    MPI_Info_create(&myInfo);
+    MPI_Info_set(myInfo,"alloc_shared_noncontig", "false");
 
     const int size = level  * row * col;
     real ***cube;
       
     cube       = (real ***)  malloc(  level         * sizeof(real**));        
     cube[0]    = (real  **)  malloc(  level  * row  * sizeof(real*));     
-    //cube[0][0] = (real   *)  calloc(( high  * row * col),sizeof(real));      
     
     if (myRank == 0) {
-        MPI_Win_allocate_shared((MPI_Aint) size*sizeof(real), sizeof(real), MPI_INFO_NULL,*sm_comm,&cube[0][0],sm_win);
+        MPI_Win_allocate_shared((MPI_Aint) size*sizeof(real), sizeof(real), myInfo,*sm_comm,&cube[0][0],sm_win);
     } else {
-        MPI_Win_allocate_shared((MPI_Aint) 0,                 sizeof(real), MPI_INFO_NULL,*sm_comm,&cube[0][0],sm_win);
+        MPI_Win_allocate_shared((MPI_Aint) 0,                 sizeof(real), myInfo,*sm_comm,&cube[0][0],sm_win);
     } // end if //
     
     

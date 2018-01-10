@@ -63,17 +63,34 @@ int main(int argc, char *argv[])
 
     real *ro_u, *ro_w;
     real ***t1, ***t2;
+    real *prevT1=NULL, *nextT1=NULL;
+    //real *prevT2=NULL, *nextT2=NULL;
     float *tplot;
     real ***p1, ***p2, ***p3;
+    real *prevP1=NULL, *nextP1=NULL;
+    //real *prevP2=NULL, *nextP2=NULL;
+    //real *prevP3=NULL, *nextP3=NULL;
     real ***u1, ***u2, ***u3;
+    real *prevU1=NULL, *nextU1=NULL;
+    //real *prevU2=NULL, *nextU2=NULL;
+    //real *prevU3=NULL, *nextU3=NULL;
     real ***v1, ***v2, ***v3;
+    real *prevV1=NULL, *nextV1=NULL;
+    //real *prevV2=NULL, *nextV2=NULL;
+    //real *prevV3=NULL, *nextV3=NULL;
     real ***w1, ***w2, ***w3;
+    real *prevW1=NULL, *nextW1=NULL;
+    //real *prevW2=NULL, *nextW2=NULL;
+    //real *prevW3=NULL, *nextW3=NULL;
+    
 	real cs,deltau;
 	real ku,kv,kw,kt;
     int nx,ny,nz,i1, i2, j1,j2, k1, k2, nxdim,nydim, nzdim, bc_width=0;
     int nstep,nplot;
     char advection_type;
     int myVoid;
+    
+    
 
     /* Parameters and input .................................... */
 
@@ -215,6 +232,20 @@ int main(int argc, char *argv[])
     nydim       = ny+2*bc_width;
     nzdim       = nz+2*bc_width;
 
+
+
+
+    const int l_level  = BLOCK_LOW (myRank,commSize,(1+k2-k1)) + bc_width;
+    const int u_level  = BLOCK_HIGH(myRank,commSize,(1+k2-k1)) + bc_width;
+    const int n_levels = 1 + 2*bc_width + u_level-l_level;
+/*    
+    MPI_Barrier(MPI_COMM_WORLD);
+    printf("myRank: %d, l_level: %d, u_level: %d, n_levels: %d  k1: %d, k2: %d\n",myRank,l_level,u_level,n_levels, k1,k2);
+    MPI_Finalize();
+    exit(0);
+    
+*/
+
 /*    
     MPI_Aint sz;
     int dispUnit;
@@ -275,9 +306,9 @@ int main(int argc, char *argv[])
     MPI_Aint sz;
     int dispUnit;
 
-    MPI_Win_shared_query(sm_win_tplot, MPI_PROC_NULL, &sz,&dispUnit,&tplot);
-    MPI_Win_shared_query(sm_win_ro_u,  MPI_PROC_NULL, &sz,&dispUnit,&ro_u);
-    MPI_Win_shared_query(sm_win_ro_w,  MPI_PROC_NULL, &sz,&dispUnit,&ro_w);
+    MPI_Win_shared_query(sm_win_tplot, MPI_PROC_NULL, &sz,&dispUnit,&tplot); // not really needed
+    MPI_Win_shared_query(sm_win_ro_u,  MPI_PROC_NULL, &sz,&dispUnit,&ro_u);  // not really needed
+    MPI_Win_shared_query(sm_win_ro_w,  MPI_PROC_NULL, &sz,&dispUnit,&ro_w);  // not really needed
     // end of allocating memory for arrays and matrices
 
     MPI_Barrier(sm_comm);
