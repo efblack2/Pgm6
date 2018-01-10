@@ -7,13 +7,15 @@ fi
 
 nloops=5
 np=`grep -c ^processor /proc/cpuinfo`
-
+np=$(($np/2))     # for running it in one socket only
+npm1=$(($np-1))  # This could be wrong. Adjust this number 
+                 # for the particular machine you are using
 
 rm -f Mpi_sm_Result.txt
 for i in  `seq 1 $np`; do
     for j in  `seq 1 $nloops`; do
         echo number of processors: $i, run number: $j 
-        mpiexec -n $i p6 $1 | grep finish >>  Mpi_sm_Result.txt
+        mpiexec -n $i taskset -c 0-$npm1 p6 $1 | grep finish >>  Mpi_sm_Result.txt
     done
 done
 
