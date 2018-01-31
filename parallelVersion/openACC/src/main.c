@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
     myVoid=fscanf(ifp, "%f %f %f",&rx[1], &ry[1], &rz[1]);
     myVoid=fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
     #endif
-
+    fclose(ifp);
 
 
     printf("Program 6, ATMS 502/CSE 566, Fall 2016\n");

@@ -138,11 +138,11 @@ int main(int argc, char *argv[])
         myVoid=fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
         #endif
     } // end if //
+    fclose(ifp);
+
     if (myRank != commSize-1) {
         MPI_Send(&file_free, 1, MPI_INT,myRank+1,1,sm_comm);
     } // end if //
-    
-    
 
 
 
