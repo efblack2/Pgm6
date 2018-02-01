@@ -259,7 +259,6 @@ int main(int argc, char *argv[])
     ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,bc_width,nx,ny,nz,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
     #pragma omp parallel 
     {
-        nthreads = omp_get_num_threads();
         bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width);
         bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width);
         // acctually only the BC of t1 should be copyed to t2 
@@ -334,8 +333,9 @@ int main(int argc, char *argv[])
          * .. Integrate .....................................................
          */
         
-         
-        tstep=dt;     
+        #pragma omp single
+        tstep=dt;
+        // end of omp single
         for (int n=1 ; n<=nstep; n++) {
             #pragma omp for nowait
 	        for (int level=0; level<nzdim; ++level) {
@@ -466,6 +466,9 @@ int main(int argc, char *argv[])
                 update(&t1,&t2);
             } // end of single    
         }	// end of time loop n = 1,...,nstep //
+        #pragma omp single nowait
+        nthreads = omp_get_num_threads();
+        // end of omp single
     } // end of parallel region //
     gettimeofday(&tp,NULL);
     elapsed_time += (tp.tv_sec*1.0e6 + tp.tv_usec);

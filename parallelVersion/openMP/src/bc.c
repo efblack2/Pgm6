@@ -16,7 +16,7 @@
 void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2,int bcw)
 {
     //  Top and bottom faces for u //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int row=j1; row<=j2; ++row) {
         for (int col=i1; col<=i2+1; ++col) {
             for (int k=1; k<=bcw; ++k) {        
@@ -27,7 +27,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
     } // end for //
 
     //  East and West faces for u  //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int level=k1; level<=k2; ++level) {
         for (int row=j1; row<=j2; ++row) {
             for (int i=0; i<=bcw; ++i) {        
@@ -52,7 +52,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
 
 
     //  Top and bottom faces for v //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int row=j1; row<=j2+1; ++row) {
         for (int col=i1; col<=i2; ++col) {
             for (int k=1; k<=bcw; ++k) {        
@@ -64,7 +64,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
 
 
     //  East and West faces for v  //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int level=k1; level<=k2; ++level) {
         for (int row=j1; row<=j2+1; ++row) {
             for (int i=1; i<=bcw; ++i) {        
@@ -90,7 +90,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
 
 
     //  Top and bottom faces for w //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int row=j1; row<=j2; ++row) {
         for (int col=i1; col<=i2; ++col) {
             //w[k1][row][col] = 0.0;
@@ -105,7 +105,7 @@ void bc(real ***u,real ***v,real ***w, int i1,int i2,int j1,int j2,int k1,int k2
 
 
     //  East and West faces for w  //
-    #pragma omp for nowait
+    #pragma omp for //nowait
     for (int level=k1; level<=k2+1; ++level) {
         for (int row=j1; row<=j2; ++row) {
             for (int i=1; i<=bcw; ++i) {        
