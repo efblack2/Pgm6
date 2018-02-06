@@ -23,7 +23,7 @@
  *				otherwise, nonlinear
  */
 
-void advec1(real *q2,const real *q1,real *uv,real dx,real dt,int i1,int i2, int nxydim, char advection_type);
+void advec1(real *q2,const real *q1,real *uv,real dx,real dt,int i1,int i2, char advection_type);
 
 void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, real ***restrict uu,real ***restrict vv, real ***restrict ww,real dx,real dy,real dz,real dt,int i1,int i2,int j1,int j2,int k1,int k2,int nxdim,int nydim,int nzdim,real tstep, char advection_type, MPI_Comm sm_comm, MPI_Win *sm_win_t)
 {
@@ -56,7 +56,7 @@ void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, re
                     fld[col] = u[level][row][col];
                 } // end for //
             } // end if //
-            advec1(q2[level][row],q1[level][row],fld,dx,dt,i1,i2,nxdim,advection_type);
+            advec1(q2[level][row],q1[level][row],fld,dx,dt,i1,i2,advection_type);
         } // end for //
     } // end for //
     MPI_Win_sync(*sm_win_t);
@@ -86,7 +86,7 @@ void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, re
                     fld[row] = v[level][row][col];
                 } // end for //
             } // end if //
-            advec1(qOut,qIn,fld,dy,dt,j1,j2,nydim,advection_type);
+            advec1(qOut,qIn,fld,dy,dt,j1,j2,advection_type);
             for (int row=j1; row<=j2; ++row) {
                 q2[level][row][col] = qOut[row];
             } // end for //
@@ -126,7 +126,7 @@ void advection(real ***restrict q2,real ***u,real ***v,real ***w, real ***q1, re
                     fld[level] = w[level][row][col];
                 } // end for //
             } // end if //
-            advec1(qOut,qIn,fld,dz,dt,k1,k2,nzdim,advection_type);
+            advec1(qOut,qIn,fld,dz,dt,k1,k2,advection_type);
             for (int level=k1; level<=k2; ++level) {
                 q2[level][row][col] = qOut[level];
             } // end for //
