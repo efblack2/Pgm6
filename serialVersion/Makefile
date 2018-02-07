@@ -10,7 +10,7 @@ EXT =
 ############################################################
 #  #flags for the GNU g++ compiler
     CC=gcc
-    COMPOP= -O3 -std=c11 -Wall  -mavx2 -ftree-vectorize -fopt-info-vec -ftree-vectorizer-verbose=3 -ffast-math $(DOUBLE)
+    COMPOP= -O3 -std=c11 -Wall -Wextra -ftree-vectorize -fopt-info-vec -ftree-vectorizer-verbose=3 -ffast-math -mavx2 $(DOUBLE)
     #COMPOP= -O3 -std=c11 -Wall -ftree-vectorize -fopt-info-vec -ftree-vectorizer-verbose=3 -ffast-math  $(DOUBLE)
     #COMPOP= -O3 -std=c11 -Wall -ftree-vectorize -fopt-info-vec -ftree-vectorizer-verbose=3 -ffast-math  -mavx2 $(DOUBLE)
     # -fopenmp  -fno-tree-vectorize  -ftree-vectorize -ffast-math

@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
     int nx,ny,nz,i1, i2, j1,j2, k1, k2, nxdim,nydim, nzdim, bc_width=0;
     int nstep,nplot;
     char advection_type;
-    int myVoid;
 
 /*    
 	// setting 1st perturbation case //
@@ -111,30 +110,30 @@ int main(int argc, char *argv[])
         printf("Single precision version\n");
     } // end if
 
-    myVoid=fscanf(ifp, "%d %d %c",&nstep, &nplot, &advection_type);
-    myVoid=fscanf(ifp, "%d %d %d",&nx, &ny, &nz);
+    fscanf(ifp, "%d %d %c",&nstep, &nplot, &advection_type);
+    fscanf(ifp, "%d %d %d",&nx, &ny, &nz);
     #ifdef DOUBLE     
-    myVoid=fscanf(ifp, "%lf %lf %lf %lf",&dx, &dy, &dz, &dt);
-    myVoid=fscanf(ifp, "%lf",&cs);
-    myVoid=fscanf(ifp, "%lf %lf %lf %lf", &ku,&kv,&kw,&kt);
-    myVoid=fscanf(ifp, "%lf",&deltau);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&x0[0], &y0[0], &z0[0]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&rx[0], &ry[0], &rz[0]);
-    myVoid=fscanf(ifp, "%lf %lf",&deltaTheta[0], &deltaV[0]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&x0[1], &y0[1], &z0[1]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&rx[1], &ry[1], &rz[1]);
-    myVoid=fscanf(ifp, "%lf %lf",&deltaTheta[1], &deltaV[1]);
+    fscanf(ifp, "%lf %lf %lf %lf",&dx, &dy, &dz, &dt);
+    fscanf(ifp, "%lf",&cs);
+    fscanf(ifp, "%lf %lf %lf %lf", &ku,&kv,&kw,&kt);
+    fscanf(ifp, "%lf",&deltau);
+    fscanf(ifp, "%lf %lf %lf",&x0[0], &y0[0], &z0[0]);
+    fscanf(ifp, "%lf %lf %lf",&rx[0], &ry[0], &rz[0]);
+    fscanf(ifp, "%lf %lf",&deltaTheta[0], &deltaV[0]);
+    fscanf(ifp, "%lf %lf %lf",&x0[1], &y0[1], &z0[1]);
+    fscanf(ifp, "%lf %lf %lf",&rx[1], &ry[1], &rz[1]);
+    fscanf(ifp, "%lf %lf",&deltaTheta[1], &deltaV[1]);
     #else
-    myVoid=fscanf(ifp, "%f %f %f %f",&dx, &dy, &dz, &dt);
-    myVoid=fscanf(ifp, "%f",&cs);
-    myVoid=fscanf(ifp, "%f %f %f %f", &ku,&kv,&kw,&kt);
-    myVoid=fscanf(ifp, "%f",&deltau);
-    myVoid=fscanf(ifp, "%f %f %f",&x0[0], &y0[0], &z0[0]);
-    myVoid=fscanf(ifp, "%f %f %f",&rx[0], &ry[0], &rz[0]);
-    myVoid=fscanf(ifp, "%f %f",&deltaTheta[0], &deltaV[0]);
-    myVoid=fscanf(ifp, "%f %f %f",&x0[1], &y0[1], &z0[1]);
-    myVoid=fscanf(ifp, "%f %f %f",&rx[1], &ry[1], &rz[1]);
-    myVoid=fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
+    fscanf(ifp, "%f %f %f %f",&dx, &dy, &dz, &dt);
+    fscanf(ifp, "%f",&cs);
+    fscanf(ifp, "%f %f %f %f", &ku,&kv,&kw,&kt);
+    fscanf(ifp, "%f",&deltau);
+    fscanf(ifp, "%f %f %f",&x0[0], &y0[0], &z0[0]);
+    fscanf(ifp, "%f %f %f",&rx[0], &ry[0], &rz[0]);
+    fscanf(ifp, "%f %f",&deltaTheta[0], &deltaV[0]);
+    fscanf(ifp, "%f %f %f",&x0[1], &y0[1], &z0[1]);
+    fscanf(ifp, "%f %f %f",&rx[1], &ry[1], &rz[1]);
+    fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
     #endif
     fclose(ifp);
 
@@ -256,7 +255,7 @@ int main(int argc, char *argv[])
      * Set and plot the initial condition
      */
      
-    ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,bc_width,nx,ny,nz,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
+    ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
     
     bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width);
     bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width);

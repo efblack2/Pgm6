@@ -22,7 +22,7 @@
  *				otherwise, nonlinear
  */
 
-void advec1(real *restrict q2,const real *restrict q1,real *uv,real dx,real dt,int i1,int i2, int nxydim, char advection_type)
+void advec1(real *restrict q2,const real *restrict q1,real *uv,real dx,real dt,int i1,int i2, char advection_type)
 {
     real courant;
     //real *flux; 

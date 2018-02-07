@@ -23,7 +23,7 @@ void getDensity(real *ro_u,real *ro_w,int k1,int k2,real dz,real g,real thetaBar
  *
  */
 
-void ic(real ***t ,real ***u ,real ***v ,real ***w ,real *ro_u,real *ro_w,real dx,real dy,real  dz,real uPertur, int i1,int i2,int j1,int j2,int k1,int k2,int bcW,int nx,int ny,int nz,real *x0,real *y0,real *z0, real *deltaTheta,real *deltaV,real thetaBar, real *rx, real *ry, real *rz,real g)
+void ic(real ***t ,real ***u ,real ***v ,real ***w ,real *ro_u,real *ro_w,real dx,real dy,real  dz,real uPertur, int i1,int i2,int j1,int j2,int k1,int k2,real *x0,real *y0,real *z0, real *deltaTheta,real *deltaV,real thetaBar, real *rx, real *ry, real *rz,real g)
 {
 
 
