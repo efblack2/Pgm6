@@ -256,7 +256,7 @@ int main(int argc, char *argv[])
      * Set and plot the initial condition
      */
      
-    ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,bc_width,nx,ny,nz,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
+    ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
     #pragma omp parallel 
     {
         bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width);
