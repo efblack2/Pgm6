@@ -9,7 +9,7 @@
 #include <ctype.h>
 #include <math.h>
 #include <sys/time.h>
-#include <omp.h> 
+#include <omp.h>
 #include "real.h"
 #include "dimCube.h"
 #include "prototypes.h"
@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
     /* constants for Computer Problem 5 and 6*/
     const real g = 9.81;
     const real thetaBar = 300.;
-    
+
 	real deltaTheta[2];      /* two temperature perturbations */
 	real deltaV[2];          /* two V perturbations */
 	real x0[2],y0[2],z0[2];  /* two locations perturbations */
@@ -63,9 +63,8 @@ int main(int argc, char *argv[])
     int nx,ny,nz,i1, i2, j1,j2, k1, k2, nxdim,nydim, nzdim, bc_width=0;
     int nstep,nplot;
     char advection_type;
-    int myVoid;
 
-/*    
+/*
 	// setting 1st perturbation case //
     x0[0]= X0_0;
     y0[0]= Y0_0;
@@ -97,10 +96,10 @@ int main(int argc, char *argv[])
         if (ifp == NULL) {
           fprintf(stderr, "Can't open input file %s!\n", argv[1]);
           exit(1);
-        }        
+        }
     } else {
-        printf("Use: %s  filename \n", argv[0]);       
-        printf("Example: %s  data.txt \n", argv[0]); 
+        printf("Use: %s  filename \n", argv[0]);
+        printf("Example: %s  data.txt \n", argv[0]);
         printf("advection_scheme can be: L for Lax-Wendroff, C for Crowley, T for Takacs, P for Piecewise, U for Upstream\n");
         exit(0);
     } // endif //
@@ -111,30 +110,30 @@ int main(int argc, char *argv[])
         printf("Single precision version\n");
     } // end if
 
-    myVoid=fscanf(ifp, "%d %d %c",&nstep, &nplot, &advection_type);
-    myVoid=fscanf(ifp, "%d %d %d",&nx, &ny, &nz);
-    #ifdef DOUBLE     
-    myVoid=fscanf(ifp, "%lf %lf %lf %lf",&dx, &dy, &dz, &dt);
-    myVoid=fscanf(ifp, "%lf",&cs);
-    myVoid=fscanf(ifp, "%lf %lf %lf %lf", &ku,&kv,&kw,&kt);
-    myVoid=fscanf(ifp, "%lf",&deltau);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&x0[0], &y0[0], &z0[0]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&rx[0], &ry[0], &rz[0]);
-    myVoid=fscanf(ifp, "%lf %lf",&deltaTheta[0], &deltaV[0]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&x0[1], &y0[1], &z0[1]);
-    myVoid=fscanf(ifp, "%lf %lf %lf",&rx[1], &ry[1], &rz[1]);
-    myVoid=fscanf(ifp, "%lf %lf",&deltaTheta[1], &deltaV[1]);
+    fscanf(ifp, "%d %d %c",&nstep, &nplot, &advection_type);
+    fscanf(ifp, "%d %d %d",&nx, &ny, &nz);
+    #ifdef DOUBLE
+    fscanf(ifp, "%lf %lf %lf %lf",&dx, &dy, &dz, &dt);
+    fscanf(ifp, "%lf",&cs);
+    fscanf(ifp, "%lf %lf %lf %lf", &ku,&kv,&kw,&kt);
+    fscanf(ifp, "%lf",&deltau);
+    fscanf(ifp, "%lf %lf %lf",&x0[0], &y0[0], &z0[0]);
+    fscanf(ifp, "%lf %lf %lf",&rx[0], &ry[0], &rz[0]);
+    fscanf(ifp, "%lf %lf",&deltaTheta[0], &deltaV[0]);
+    fscanf(ifp, "%lf %lf %lf",&x0[1], &y0[1], &z0[1]);
+    fscanf(ifp, "%lf %lf %lf",&rx[1], &ry[1], &rz[1]);
+    fscanf(ifp, "%lf %lf",&deltaTheta[1], &deltaV[1]);
     #else
-    myVoid=fscanf(ifp, "%f %f %f %f",&dx, &dy, &dz, &dt);
-    myVoid=fscanf(ifp, "%f",&cs);
-    myVoid=fscanf(ifp, "%f %f %f %f", &ku,&kv,&kw,&kt);
-    myVoid=fscanf(ifp, "%f",&deltau);
-    myVoid=fscanf(ifp, "%f %f %f",&x0[0], &y0[0], &z0[0]);
-    myVoid=fscanf(ifp, "%f %f %f",&rx[0], &ry[0], &rz[0]);
-    myVoid=fscanf(ifp, "%f %f",&deltaTheta[0], &deltaV[0]);
-    myVoid=fscanf(ifp, "%f %f %f",&x0[1], &y0[1], &z0[1]);
-    myVoid=fscanf(ifp, "%f %f %f",&rx[1], &ry[1], &rz[1]);
-    myVoid=fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
+    fscanf(ifp, "%f %f %f %f",&dx, &dy, &dz, &dt);
+    fscanf(ifp, "%f",&cs);
+    fscanf(ifp, "%f %f %f %f", &ku,&kv,&kw,&kt);
+    fscanf(ifp, "%f",&deltau);
+    fscanf(ifp, "%f %f %f",&x0[0], &y0[0], &z0[0]);
+    fscanf(ifp, "%f %f %f",&rx[0], &ry[0], &rz[0]);
+    fscanf(ifp, "%f %f",&deltaTheta[0], &deltaV[0]);
+    fscanf(ifp, "%f %f %f",&x0[1], &y0[1], &z0[1]);
+    fscanf(ifp, "%f %f %f",&rx[1], &ry[1], &rz[1]);
+    fscanf(ifp, "%f %f",&deltaTheta[1], &deltaV[1]);
     #endif
     fclose(ifp);
 
@@ -151,11 +150,11 @@ int main(int argc, char *argv[])
 	printf("KW=%.5f\n", kw);
 	printf("KT=%.5f\n", kt);
 	printf("deltau=%.5f\n", deltau);
-	
+
 	printf("x0=%.5f\n", x0[0]);
 	printf("y0=%.5f\n", y0[0]);
 	printf("z0=%.5f\n", z0[0]);
-	
+
 	printf("rx=%.5f\n", rx[0]);
 	printf("ry=%.5f\n", ry[0]);
 	printf("rz=%.5f\n", rz[0]);
@@ -167,7 +166,7 @@ int main(int argc, char *argv[])
 	printf("x1=%.5f\n", x0[1]);
 	printf("y1=%.5f\n", y0[1]);
 	printf("z1=%.5f\n", z0[1]);
-	
+
 	printf("rx=%.5f\n", rx[1]);
 	printf("ry=%.5f\n", ry[1]);
 	printf("rz=%.5f\n", rz[1]);
@@ -175,8 +174,8 @@ int main(int argc, char *argv[])
 	printf("deltaTheta=%.5f\n", deltaTheta[1]);
 	printf("deltaV=%.5f\n", deltaV[1]);
 
-    
-/*    
+
+/*
     printf("Domain (%3d,%3d,%3d)\n",NZ,NY,NX);
     printf("dx=%.5f\n", dx);
     printf("dx=%.5f\n", dy);
@@ -185,8 +184,8 @@ int main(int argc, char *argv[])
 
 	printf(" >>> Using left  cone size =  %10.7e %10.7e %10.7e\n",rx[0],ry[0],rz[0]);
 	printf(" >>> Using right cone size =  %10.7e %10.7e %10.7e\n",rx[1],ry[1],rz[1]);
-*/	
-	
+*/
+
     switch ( advection_type ) {
     case 'l':
     case 'u':
@@ -217,8 +216,8 @@ int main(int argc, char *argv[])
     nzdim       = nz+2*bc_width;
 
 
-    
-    
+
+
     t1 = dimCube(nzdim,nydim,nxdim);
     t2 = dimCube(nzdim,nydim,nxdim);
 	tplot = malloc( nx * ny * nz * sizeof(float*));
@@ -231,37 +230,37 @@ int main(int argc, char *argv[])
     u1 = dimCube(nzdim,nydim,nxdim+1);
     u2 = dimCube(nzdim,nydim,nxdim+1);
     u3 = dimCube(nzdim,nydim,nxdim+1);
-    
+
     v1 = dimCube(nzdim,nydim+1,nxdim);
     v2 = dimCube(nzdim,nydim+1,nxdim);
     v3 = dimCube(nzdim,nydim+1,nxdim);
-    
+
 
     w1 = dimCube(nzdim+1,nydim,nxdim);
     w2 = dimCube(nzdim+1,nydim,nxdim);
     w3 = dimCube(nzdim+1,nydim,nxdim);
-    
+
 
     ro_u=malloc(nzdim*sizeof(real));
     ro_w=malloc((nzdim+1)*sizeof(real));
-    
-    
+
+
     // end of allocating memory for arrays and matrices
 
 
     gettimeofday(&tp,NULL);
-    elapsed_time = -(tp.tv_sec*1.0e6 + tp.tv_usec);  
+    elapsed_time = -(tp.tv_sec*1.0e6 + tp.tv_usec);
 
     /*
      * Set and plot the initial condition
      */
-     
+
     ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
-    #pragma omp parallel 
+    #pragma omp parallel
     {
         bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width);
         bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width);
-        // acctually only the BC of t1 should be copyed to t2 
+        // acctually only the BC of t1 should be copyed to t2
         #pragma omp for
         for (int level=0; level<nzdim; ++level) {
             for (int row=0; row<nydim; ++row) {
@@ -270,7 +269,7 @@ int main(int argc, char *argv[])
                 } // end for //
             } // end for //
         } // end for //
-        
+
         // Ploting initial conditions //
         #pragma omp for
         for (int col=i1; col<=i2; ++col) {
@@ -279,10 +278,10 @@ int main(int argc, char *argv[])
                     tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (t1[level][row][col] - thetaBar);
                 } // end for //
             } // end for //
-        } // end for // 
-        #pragma omp single 
+        } // end for //
+        #pragma omp single
         putfield("T",0.0,tplot, nx,ny,nz);
-        
+
         #pragma omp for
         for (int col=i1; col<=i2; ++col) {
             for (int row=j1; row<=j2; ++row) {
@@ -290,10 +289,10 @@ int main(int argc, char *argv[])
                     tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(u1[level][row][col]+u1[level][row][col+1]));
                 } // end for //
             } // end for //
-        } // end for // 
-        #pragma omp single 
+        } // end for //
+        #pragma omp single
         putfield("U",0.0,tplot, nx,ny,nz);
-        
+
         #pragma omp for
         for (int col=i1; col<=i2; ++col) {
             for (int row=j1; row<=j2; ++row) {
@@ -301,10 +300,10 @@ int main(int argc, char *argv[])
                     tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(v1[level][row][col]+v1[level][row+1][col]));
                 } // end for //
             } // end for //
-        } // end for //     
-        #pragma omp single 
+        } // end for //
+        #pragma omp single
         putfield("V",0.0,tplot, nx,ny,nz);
-        
+
         #pragma omp for
         for (int col=i1; col<=i2; ++col) {
             for (int row=j1; row<=j2; ++row) {
@@ -313,7 +312,7 @@ int main(int argc, char *argv[])
                 } // end for //
             } // end for //
         } // end for //
-        #pragma omp single 
+        #pragma omp single
         putfield("W",0.0,tplot, nx,ny,nz);
 
         #pragma omp for
@@ -324,7 +323,7 @@ int main(int argc, char *argv[])
                 } // end for //
             } // end for //
         } // end for //
-        #pragma omp single 
+        #pragma omp single
         putfield("P",0.0,tplot, nx,ny,nz);
 
         // end of Plotting initial conditions //
@@ -332,7 +331,7 @@ int main(int argc, char *argv[])
         /*
          * .. Integrate .....................................................
          */
-        
+
         #pragma omp single
         tstep=dt;
         // end of omp single
@@ -354,7 +353,7 @@ int main(int argc, char *argv[])
 	                } // end for //
 	            } // end for //
             } // end for //
-	        
+
 	        #pragma omp for // using the implicit barrirer to syncromize
 	        for (int level=0; level<=nzdim; ++level) {
 	            for (int row=0; row<nydim; ++row) {
@@ -363,7 +362,7 @@ int main(int argc, char *argv[])
 	                } // end for //
 	            } // end for //
             } // end for //
-            
+
             //  . . . Compute values at next step                           //
 
 
@@ -378,7 +377,7 @@ int main(int argc, char *argv[])
 
 
 	        if (n%nplot == 0) {
-	        
+
                 #pragma omp for
                 for (int col=i1; col<=i2; ++col) {
                     for (int row=j1; row<=j2; ++row) {
@@ -386,10 +385,10 @@ int main(int argc, char *argv[])
                             tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (t2[level][row][col] - thetaBar);
                         } // end for //
                     } // end for //
-                } // end for // 
-                #pragma omp single 
+                } // end for //
+                #pragma omp single
                 putfield("T",(float) dt*n,tplot, nx,ny,nz);
-                
+
                 #pragma omp for
                 for (int col=i1; col<=i2; ++col) {
                     for (int row=j1; row<=j2; ++row) {
@@ -397,8 +396,8 @@ int main(int argc, char *argv[])
                             tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(u3[level][row][col]+u3[level][row][col+1]));
                         } // end for //
                     } // end for //
-                } // end for // 
-                #pragma omp single 
+                } // end for //
+                #pragma omp single
                 putfield("U",(float) dt*n,tplot, nx,ny,nz);
 
                 #pragma omp for
@@ -408,8 +407,8 @@ int main(int argc, char *argv[])
                             tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(v3[level][row][col]+v3[level][row+1][col]));
                         } // end for //
                     } // end for //
-                } // end for //     
-                #pragma omp single 
+                } // end for //
+                #pragma omp single
                 putfield("V",(float) dt*n,tplot, nx,ny,nz);
 
                 #pragma omp for
@@ -420,7 +419,7 @@ int main(int argc, char *argv[])
                         } // end for //
                     } // end for //
                 } // end for //
-                #pragma omp single 
+                #pragma omp single
                 putfield("W",(float) dt*n,tplot, nx,ny,nz);
 
                 #pragma omp for
@@ -431,40 +430,40 @@ int main(int argc, char *argv[])
                         } // end for //
                     } // end for //
                 } // end for //
-                #pragma omp single 
+                #pragma omp single
                 putfield("P",(float) dt*n,tplot, nx,ny,nz);
             } // end if //
 
             //  . . . Do array update at end of time step                   //
             #pragma omp single
-            {            
-                if (n == 1) { 
+            {
+                if (n == 1) {
                     tstep=2.0*dt;
-                    
+
                     update(&p2,&p3);
                     update(&u2,&u3);
                     update(&v2,&v3);
                     update(&w2,&w3);
-                    
-                    
+
+
                 } else {
-                    
+
                     update(&p1,&p2);
                     update(&p2,&p3);
-                    
+
                     update(&u1,&u2);
                     update(&u2,&u3);
-                    
+
                     update(&v1,&v2);
                     update(&v2,&v3);
-                    
+
                     update(&w1,&w2);
                     update(&w2,&w3);
-                    
-                    
+
+
                 } // end if //
                 update(&t1,&t2);
-            } // end of single    
+            } // end of single
         }	// end of time loop n = 1,...,nstep //
         #pragma omp single nowait
         nthreads = omp_get_num_threads();
@@ -480,14 +479,14 @@ int main(int argc, char *argv[])
         printf("Single precision version\n");
     } // end if
 
-    
+
     freeCube(&t2);
     freeCube(&t1);
 
     freeCube(&p1);
     freeCube(&p2);
     freeCube(&p3);
-    
+
     freeCube(&u1);
     freeCube(&u2);
     freeCube(&u3);
@@ -504,7 +503,7 @@ int main(int argc, char *argv[])
 	free(ro_u);
 	free(ro_w);
 
-    
+
     return 0;
 } // end main() //
 
