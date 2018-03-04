@@ -39,12 +39,12 @@ int main(int argc, char *argv[])
     MPI_Comm_split_type(MPI_COMM_WORLD,MPI_COMM_TYPE_SHARED, 0,MPI_INFO_NULL, &sm_comm);
     MPI_Comm_rank(sm_comm,&myRank);
     MPI_Comm_size(sm_comm,&commSize);
-    const int root=0; 
-    //const int root=commSize-1; 
-    
+    const int root=0;
+    //const int root=commSize-1;
+
     //int nthreads;
     double elapsed_time;
-    
+
     FILE *ifp=NULL;
 
     real dx,dy,dz,dt;
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
     /* constants for Computer Problem 5 and 6*/
     const real g = 9.81;
     const real thetaBar = 300.;
-    
+
 	real deltaTheta[2];      /* two temperature perturbations */
 	real deltaV[2];          /* two V perturbations */
 	real x0[2],y0[2],z0[2];  /* two locations perturbations */
@@ -82,11 +82,11 @@ int main(int argc, char *argv[])
             if (myRank == root) fprintf(stderr, "Can't open input file %s!\n", argv[1]);
             MPI_Finalize();
             exit(1);
-        } // end if //        
+        } // end if //
     } else {
         if (myRank == root) {
-            printf("Use: %s  filename \n", argv[0]);       
-            printf("Example: %s  data.txt \n", argv[0]); 
+            printf("Use: %s  filename \n", argv[0]);
+            printf("Example: %s  data.txt \n", argv[0]);
             printf("advection_scheme can be: L for Lax-Wendroff, C for Crowley, T for Takacs, P for Piecewise, U for Upstream\n");
         } // end if //
         MPI_Finalize();
@@ -100,20 +100,20 @@ int main(int argc, char *argv[])
             printf("Single precision version\n");
         } // end if
     } // end if
-    
+
     int file_free = 0;
     MPI_Status status;
-    
+
     if (myRank == 0) {
         file_free = 1;
     } else {
         MPI_Recv(&file_free, 1, MPI_INT,myRank-1,1,sm_comm,&status);
     } // end if //
-    
+
     if (file_free == 1) {
         fscanf(ifp, "%d %d %c",&nstep, &nplot, &advection_type);
         fscanf(ifp, "%d %d %d",&nx, &ny, &nz);
-        #ifdef DOUBLE     
+        #ifdef DOUBLE
         fscanf(ifp, "%lf %lf %lf %lf",&dx, &dy, &dz, &dt);
         fscanf(ifp, "%lf",&cs);
         fscanf(ifp, "%lf %lf %lf %lf", &ku,&kv,&kw,&kt);
@@ -158,11 +158,11 @@ int main(int argc, char *argv[])
 	    printf("KW=%.5f\n", kw);
 	    printf("KT=%.5f\n", kt);
 	    printf("deltau=%.5f\n", deltau);
-	
+
 	    printf("x0=%.5f\n", x0[0]);
 	    printf("y0=%.5f\n", y0[0]);
 	    printf("z0=%.5f\n", z0[0]);
-	
+
 	    printf("rx=%.5f\n", rx[0]);
 	    printf("ry=%.5f\n", ry[0]);
 	    printf("rz=%.5f\n", rz[0]);
@@ -174,7 +174,7 @@ int main(int argc, char *argv[])
 	    printf("x1=%.5f\n", x0[1]);
 	    printf("y1=%.5f\n", y0[1]);
 	    printf("z1=%.5f\n", z0[1]);
-	
+
 	    printf("rx=%.5f\n", rx[1]);
 	    printf("ry=%.5f\n", ry[1]);
 	    printf("rz=%.5f\n", rz[1]);
@@ -182,7 +182,7 @@ int main(int argc, char *argv[])
 	    printf("deltaTheta=%.5f\n", deltaTheta[1]);
 	    printf("deltaV=%.5f\n", deltaV[1]);
     } // end if //
-	
+
     switch ( advection_type ) {
     case 'l':
     case 'u':
@@ -203,7 +203,7 @@ int main(int argc, char *argv[])
         exit(1);
         break;
     } // end switch //
-    
+
     i1          = bc_width;
     i2          = i1+nx-1;
     j1          = bc_width;
@@ -214,52 +214,52 @@ int main(int argc, char *argv[])
     nydim       = ny+2*bc_width;
     nzdim       = nz+2*bc_width;
 
-/*    
+/*
     MPI_Aint sz;
     int dispUnit;
-*/    
-    
+*/
+
     MPI_Win sm_win_t1;
     MPI_Win sm_win_t2;
-    
-    t1 = dimCube(nzdim,nydim,nxdim, &sm_win_t1, myRank,&sm_comm);
-    t2 = dimCube(nzdim,nydim,nxdim, &sm_win_t2, myRank,&sm_comm);
-    
+
+    t1 = dimCube(nzdim,nydim,nxdim, &sm_win_t1, &sm_comm);
+    t2 = dimCube(nzdim,nydim,nxdim, &sm_win_t2, &sm_comm);
+
     MPI_Win sm_win_p1;
     MPI_Win sm_win_p2;
     MPI_Win sm_win_p3;
 
 
-    p1 = dimCube(nz,ny,nx, &sm_win_p1, myRank,&sm_comm);
-    p2 = dimCube(nz,ny,nx, &sm_win_p2, myRank,&sm_comm);
-    p3 = dimCube(nz,ny,nx, &sm_win_p3, myRank,&sm_comm);
+    p1 = dimCube(nz,ny,nx, &sm_win_p1, &sm_comm);
+    p2 = dimCube(nz,ny,nx, &sm_win_p2, &sm_comm);
+    p3 = dimCube(nz,ny,nx, &sm_win_p3, &sm_comm);
 
 
     MPI_Win sm_win_u1;
     MPI_Win sm_win_u2;
     MPI_Win sm_win_u3;
 
-    u1 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u1, myRank,&sm_comm);
-    u2 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u2, myRank,&sm_comm);
-    u3 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u3, myRank,&sm_comm);
+    u1 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u1, &sm_comm);
+    u2 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u2, &sm_comm);
+    u3 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u3, &sm_comm);
 
     MPI_Win sm_win_v1;
     MPI_Win sm_win_v2;
     MPI_Win sm_win_v3;
-    
-    v1 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v1, myRank,&sm_comm);
-    v2 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v2, myRank,&sm_comm);
-    v3 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v3, myRank,&sm_comm);
+
+    v1 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v1, &sm_comm);
+    v2 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v2, &sm_comm);
+    v3 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v3, &sm_comm);
 
     MPI_Win sm_win_w1;
     MPI_Win sm_win_w2;
     MPI_Win sm_win_w3;
 
-    w1 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w1, myRank,&sm_comm);
-    w2 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w2, myRank,&sm_comm);
-    w3 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w3, myRank,&sm_comm);
+    w1 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w1, &sm_comm);
+    w2 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w2, &sm_comm);
+    w3 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w3, &sm_comm);
 
-    
+
     MPI_Win sm_win_tplot,sm_win_ro_u,sm_win_ro_w;
     if (myRank == root) {
         MPI_Win_allocate_shared((MPI_Aint) nz * ny * nx * sizeof(float),sizeof(float),MPI_INFO_NULL,sm_comm,&tplot,&sm_win_tplot);
@@ -300,12 +300,12 @@ int main(int argc, char *argv[])
     MPI_Win_lock_all(0,sm_win_ro_u);
     MPI_Win_lock_all(0,sm_win_ro_w);
 
-    
+
     if (myRank == root) {
         ic(t1,u1,v1,w1,ro_u,ro_w,dx,dy,dz,deltau,i1,i2,j1,j2,k1,k2,x0,y0,z0,deltaTheta,deltaV,thetaBar,rx,ry,rz,g);
     } // end if //
 
-    
+
     MPI_Win_sync(sm_win_t1);
     MPI_Win_sync(sm_win_u1);
     MPI_Win_sync(sm_win_v1);
@@ -313,14 +313,14 @@ int main(int argc, char *argv[])
     MPI_Win_sync(sm_win_ro_u);
     MPI_Win_sync(sm_win_ro_w);
     MPI_Barrier(sm_comm);
-    
-    
-    //#pragma omp parallel 
-    
+
+
+    //#pragma omp parallel
+
     //nthreads = omp_get_num_threads();
     bc(u1,v1,w1,i1,i2,j1,j2,k1,k2,bc_width,myRank,commSize);
     bc4T(t1,t2,i1,i2,j1,j2,k1,k2,bc_width,myRank,commSize);
-    
+
     MPI_Win_sync(sm_win_u1);
     MPI_Win_sync(sm_win_v1);
     MPI_Win_sync(sm_win_w1);
@@ -333,7 +333,7 @@ int main(int argc, char *argv[])
     const int lk2 = BLOCK_HIGH(myRank,commSize,nzdim)+1;
     //printf("myRank: %3d, lk1: %3d, lk2: %3d, ndimz: %3d\n", myRank, lk1,lk2, nzdim);
 
-    // acctually only the BC of t1 should be copyed to t2 
+    // acctually only the BC of t1 should be copyed to t2
     //#pragma omp for
     for (int level=lk1; level<lk2; ++level) {
         for (int row=0; row<nydim; ++row) {
@@ -360,10 +360,10 @@ int main(int argc, char *argv[])
                 tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (t1[level][row][col] - thetaBar);
             } // end for //
         } // end for //
-    } // end for // 
+    } // end for //
     MPI_Win_sync(sm_win_tplot);
     MPI_Barrier(sm_comm);
-    //#pragma omp single 
+    //#pragma omp single
     if (myRank == root) putfield("T",0.0,tplot, nx,ny,nz);
     MPI_Barrier(sm_comm);
 
@@ -375,10 +375,10 @@ int main(int argc, char *argv[])
                 tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(u1[level][row][col]+u1[level][row][col+1]));
             } // end for //
         } // end for //
-    } // end for // 
+    } // end for //
     MPI_Win_sync(sm_win_tplot);
     MPI_Barrier(sm_comm);
-    //#pragma omp single 
+    //#pragma omp single
     if (myRank == root) putfield("U",0.0,tplot, nx,ny,nz);
     MPI_Barrier(sm_comm);
 
@@ -390,13 +390,13 @@ int main(int argc, char *argv[])
                 tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(v1[level][row][col]+v1[level][row+1][col]));
             } // end for //
         } // end for //
-    } // end for //     
+    } // end for //
     MPI_Win_sync(sm_win_tplot);
     MPI_Barrier(sm_comm);
-    //#pragma omp single 
+    //#pragma omp single
     if (myRank == root) putfield("V",0.0,tplot, nx,ny,nz);
     MPI_Barrier(sm_comm);
-    
+
     //#pragma omp for
     for (int col=ii1; col<=ii2; ++col) {
         for (int row=j1; row<=j2; ++row) {
@@ -407,10 +407,10 @@ int main(int argc, char *argv[])
     } // end for //
     MPI_Win_sync(sm_win_tplot);
     MPI_Barrier(sm_comm);
-    //#pragma omp single 
+    //#pragma omp single
     if (myRank == root) putfield("W",0.0,tplot, nx,ny,nz);
     MPI_Barrier(sm_comm);
-    
+
 
     const int lS = BLOCK_LOW (myRank,commSize,nx);
     const int lE = BLOCK_HIGH(myRank,commSize,nx) + 1;
@@ -426,10 +426,10 @@ int main(int argc, char *argv[])
     } // end for //
     MPI_Win_sync(sm_win_tplot);
     MPI_Barrier(sm_comm);
-    //#pragma omp single 
+    //#pragma omp single
     if (myRank == root) putfield("P",0.0,tplot, nx,ny,nz);
     MPI_Barrier(sm_comm);
-    
+
     // end of Plotting initial conditions //
 
 
@@ -439,15 +439,15 @@ int main(int argc, char *argv[])
 
     const int lk3 = BLOCK_LOW (myRank,commSize,(nzdim+1));
     const int lk4 = BLOCK_HIGH(myRank,commSize,(nzdim+1));
-    //printf("myRank: %3d, lk3: %3d, lk4: %3d, ndimz: %3d\n", myRank, lk3,lk4, nzdim);        
+    //printf("myRank: %3d, lk3: %3d, lk4: %3d, ndimz: %3d\n", myRank, lk3,lk4, nzdim);
 
     const int kk1 = BLOCK_LOW (myRank,commSize,(1+k2-k1)) + bc_width;
     const int kk2 = BLOCK_HIGH(myRank,commSize,(1+k2-k1)) + bc_width;
     //printf("myRank: %3d, --> kk1: %3d, kk2: %3d, k1: %3d, k2: %3d\n", myRank,kk1,kk2, k1,k2);
 
-    tstep=dt;     
+    tstep=dt;
     for (int n=1 ; n<=nstep; n++) {
-    
+
         //#pragma omp for nowait
         for (int level=lk1; level<lk2; ++level) {
             for (int row=0; row<nydim; ++row) {
@@ -465,7 +465,7 @@ int main(int argc, char *argv[])
                 } // end for //
             } // end for //
         } // end for //
-        
+
 
 
         //#pragma omp for // using the implicit barrier to syncromize
@@ -476,7 +476,7 @@ int main(int argc, char *argv[])
                 } // end for //
             } // end for //
         } // end for //
-        
+
         MPI_Win_sync(sm_win_u3);
         MPI_Win_sync(sm_win_v3);
         MPI_Win_sync(sm_win_w3);
@@ -490,9 +490,9 @@ int main(int argc, char *argv[])
         MPI_Win_sync(sm_win_v3);
         MPI_Win_sync(sm_win_w3);
         MPI_Barrier(sm_comm);
-        
-        
-        
+
+
+
         diffusion(t2,u3,v3,w3,t1,u1,v1,w1,dx*dx,dy*dy,dz*dz,i1,i2,j1,j2,kk1,kk2,dt,tstep,ku,kv,kw,kt);// KU,KV,KW,KT);
         MPI_Win_sync(sm_win_t2);
         MPI_Win_sync(sm_win_u3);
@@ -517,10 +517,10 @@ int main(int argc, char *argv[])
                         tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (t2[level][row][col] - thetaBar);
                     } // end for //
                 } // end for //
-            } // end for // 
+            } // end for //
             MPI_Win_sync(sm_win_tplot);
             MPI_Barrier(sm_comm);
-            //#pragma omp single 
+            //#pragma omp single
             if (myRank == root) putfield("T",(float) dt*n,tplot, nx,ny,nz);
             MPI_Barrier(sm_comm);
 
@@ -533,10 +533,10 @@ int main(int argc, char *argv[])
                         tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(u3[level][row][col]+u3[level][row][col+1]));
                     } // end for //
                 } // end for //
-            } // end for // 
+            } // end for //
             MPI_Win_sync(sm_win_tplot);
             MPI_Barrier(sm_comm);
-            //#pragma omp single 
+            //#pragma omp single
             if (myRank == root) putfield("U",(float) dt*n,tplot, nx,ny,nz);
             MPI_Barrier(sm_comm);
 
@@ -547,10 +547,10 @@ int main(int argc, char *argv[])
                         tplot[(col-i1)*nz*ny + (row-j1)*nz + (level-k1)] = (float) (0.5*(v3[level][row][col]+v3[level][row+1][col]));
                     } // end for //
                 } // end for //
-            } // end for //     
+            } // end for //
             MPI_Win_sync(sm_win_tplot);
             MPI_Barrier(sm_comm);
-            //#pragma omp single 
+            //#pragma omp single
             if (myRank == root) putfield("V",(float) dt*n,tplot, nx,ny,nz);
             MPI_Barrier(sm_comm);
 
@@ -564,7 +564,7 @@ int main(int argc, char *argv[])
             } // end for //
             MPI_Win_sync(sm_win_tplot);
             MPI_Barrier(sm_comm);
-            //#pragma omp single 
+            //#pragma omp single
             if (myRank == root) putfield("W",(float) dt*n,tplot, nx,ny,nz);
             MPI_Barrier(sm_comm);
 
@@ -578,14 +578,14 @@ int main(int argc, char *argv[])
             } // end for //
             MPI_Win_sync(sm_win_tplot);
             MPI_Barrier(sm_comm);
-            //#pragma omp single 
+            //#pragma omp single
             if (myRank == root) putfield("P",(float) dt*n,tplot, nx,ny,nz);
             MPI_Barrier(sm_comm);
-            
+
         } // end if //
 
         //  . . . Do array update at end of time step                   //
-        if (n == 1) { 
+        if (n == 1) {
             tstep=2.0*dt;
             update(&p2,&p3);
             update(&u2,&u3);
@@ -602,8 +602,8 @@ int main(int argc, char *argv[])
             update(&w2,&w3);
         } // end if //
         update(&t1,&t2);
-        
-        
+
+
         MPI_Win_sync(sm_win_t1);
         MPI_Win_sync(sm_win_t2);
         MPI_Win_sync(sm_win_u3);
@@ -631,10 +631,10 @@ int main(int argc, char *argv[])
     MPI_Win_unlock_all(sm_win_w3);
     MPI_Win_unlock_all(sm_win_ro_u);
     MPI_Win_unlock_all(sm_win_ro_w);
-    
+
     MPI_Barrier(sm_comm);
     elapsed_time += MPI_Wtime();
-    
+
     if (myRank == root) {
         printf ("\n\nIt tooks %14.6e seconds for %d processes to finish\n", elapsed_time, commSize);
         if (sizeof(real) == 8) {
@@ -650,7 +650,7 @@ int main(int argc, char *argv[])
     freeCube(&p1, &sm_win_p1);
     freeCube(&p2, &sm_win_p2);
     freeCube(&p3, &sm_win_p3);
-    
+
     freeCube(&u1, &sm_win_u1);
     freeCube(&u2, &sm_win_u2);
     freeCube(&u3, &sm_win_u3);
@@ -662,13 +662,13 @@ int main(int argc, char *argv[])
     freeCube(&w1, &sm_win_w1);
     freeCube(&w2, &sm_win_w2);
     freeCube(&w3, &sm_win_w3);
-    
+
     MPI_Win_free(&sm_win_tplot);
     MPI_Win_free(&sm_win_ro_u);
     MPI_Win_free(&sm_win_ro_w);
     MPI_Finalize();
 
-    
+
     return 0;
 } // end main() //
 
