@@ -17,12 +17,12 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU" )
 elseif ( CMAKE_C_COMPILER_ID STREQUAL "Intel" )
     set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Wall -qopt-report=3 -qopt-report-phase=vec -xCORE-AVX2")
 elseif ( CMAKE_C_COMPILER_ID STREQUAL "PGI" )
-    set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Minform=inform -Minfo=all -Mvect=simd -DPGI")
+    set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -Minform=inform -Minfo=all -Mvect=simd ")
 endif ( )
 ## end of the following lines mainly contain flags I have not found in CMake
 
 if (DOUBLE_PRECISION)
-    set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -DDOUBLE")    
+    set(CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} -DDOUBLE")
 endif()
 
 
@@ -42,5 +42,4 @@ target_link_libraries(p6 ${CMAKE_EXE_LINKER_FLAGS})
 #MESSAGE( STATUS "CMAKE_C_FLAGS: "               ${CMAKE_C_FLAGS} )
 #MESSAGE( STATUS "CMAKE_CURRENT_SOURCE_DIR: "    ${CMAKE_CURRENT_SOURCE_DIR} )
 ########### end of Debug messages #################
-
 
