@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.9)
 ## set appropriately the following line to create a Double Precision version
 set(DOUBLE_PRECISION ON)
 
-project(streamOpenMP)
+project(program6_MPI_sm C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_BUILD_TYPE Release)
