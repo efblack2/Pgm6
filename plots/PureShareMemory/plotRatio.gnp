@@ -1,0 +1,33 @@
+#!/usr/bin/gnuplot
+# call it as:
+# gnuplot -c plotRatio.gnp stout
+#
+machine=ARG1
+
+set terminal pdf enhanced
+set output machine."Ratio.pdf"
+set style line 1 dt 1 ps 0.6 lc rgb "#ff0000";
+set style line 2 dt 4 ps 0.5 lc rgb "#ff4f00";
+
+set style line 3 dt 1 ps 0.6 lc rgb "#0000ff";
+set style line 4 dt 4 ps 0.5 lc rgb "#0099ff";
+
+set style line 5 dt 1 ps 0.6 lc rgb "#00ff00";
+set style line 6 dt 4 ps 0.5 lc rgb "#00ff99";
+
+#set key top left box
+set key bottom right box
+set grid
+
+set xlabel "Number of Processors/Threads"
+set ylabel "Time [S]"
+     
+set title machine
+#set label "" at screen 0.5, 0.9 center font "Arial,11"
+set label "OpenMP to MPI\_{sm} Ratio" at graph 0.5, 1.035 center font "Arial,11"
+
+plot [0:] [0:] \
+        machine.'/gnu/results.txt'   using 1:($12/$6) title "Gnu Compiler"   with linespoints ls 1,\
+        machine.'/intel/results.txt' using 1:($12/$6) title "Intel Compiler" with linespoints ls 3,\
+        machine.'/pgi/results.txt'   using 1:($12/$6) title "Pgi Compiler"   with linespoints ls 5,\
+     
