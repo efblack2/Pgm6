@@ -2,4 +2,4 @@ build/
 buildGnu/
 buildIntel/
 buildPgi/
-
+*.pdf
