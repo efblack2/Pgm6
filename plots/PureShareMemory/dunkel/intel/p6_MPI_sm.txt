@@ -1,8 +1,8 @@
-1 processors: the min is 79.962040
-2 processors: the min is 43.258730
-4 processors: the min is 22.664210
-6 processors: the min is 16.518610
-8 processors: the min is 14.684380
-10 processors: the min is 12.358640
-12 processors: the min is 11.239790
-14 processors: the min is 10.976190
+1 processors: the min is 75.100690
+2 processors: the min is 40.707450
+4 processors: the min is 21.799200
+6 processors: the min is 15.552990
+8 processors: the min is 12.884620
+10 processors: the min is 11.620830
+12 processors: the min is 9.287483
+14 processors: the min is 10.018420
