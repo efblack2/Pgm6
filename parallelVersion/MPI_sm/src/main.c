@@ -219,45 +219,44 @@ int main(int argc, char *argv[])
     int dispUnit;
 */
 
+
     MPI_Win sm_win_t1;
     MPI_Win sm_win_t2;
 
-    t1 = dimCube(nzdim,nydim,nxdim, &sm_win_t1, &sm_comm);
-    t2 = dimCube(nzdim,nydim,nxdim, &sm_win_t2, &sm_comm);
+    t1 = dimCube(nzdim,nydim,nxdim,bc_width, &sm_win_t1, &sm_comm);
+    t2 = dimCube(nzdim,nydim,nxdim,bc_width, &sm_win_t2, &sm_comm);
 
     MPI_Win sm_win_p1;
     MPI_Win sm_win_p2;
     MPI_Win sm_win_p3;
 
-
-    p1 = dimCube(nz,ny,nx, &sm_win_p1, &sm_comm);
-    p2 = dimCube(nz,ny,nx, &sm_win_p2, &sm_comm);
-    p3 = dimCube(nz,ny,nx, &sm_win_p3, &sm_comm);
-
+    p1 = dimCube(nz,ny,nx,0, &sm_win_p1, &sm_comm);
+    p2 = dimCube(nz,ny,nx,0, &sm_win_p2, &sm_comm);
+    p3 = dimCube(nz,ny,nx,0, &sm_win_p3, &sm_comm);
 
     MPI_Win sm_win_u1;
     MPI_Win sm_win_u2;
     MPI_Win sm_win_u3;
 
-    u1 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u1, &sm_comm);
-    u2 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u2, &sm_comm);
-    u3 = dimCube(nzdim,nydim,(nxdim+1), &sm_win_u3, &sm_comm);
+    u1 = dimCube(nzdim,nydim,(nxdim+1),bc_width, &sm_win_u1, &sm_comm);
+    u2 = dimCube(nzdim,nydim,(nxdim+1),bc_width, &sm_win_u2, &sm_comm);
+    u3 = dimCube(nzdim,nydim,(nxdim+1),bc_width, &sm_win_u3, &sm_comm);
 
     MPI_Win sm_win_v1;
     MPI_Win sm_win_v2;
     MPI_Win sm_win_v3;
 
-    v1 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v1, &sm_comm);
-    v2 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v2, &sm_comm);
-    v3 = dimCube(nzdim,(nydim+1),nxdim, &sm_win_v3, &sm_comm);
+    v1 = dimCube(nzdim,(nydim+1),nxdim,bc_width, &sm_win_v1, &sm_comm);
+    v2 = dimCube(nzdim,(nydim+1),nxdim,bc_width, &sm_win_v2, &sm_comm);
+    v3 = dimCube(nzdim,(nydim+1),nxdim,bc_width, &sm_win_v3, &sm_comm);
 
     MPI_Win sm_win_w1;
     MPI_Win sm_win_w2;
     MPI_Win sm_win_w3;
 
-    w1 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w1, &sm_comm);
-    w2 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w2, &sm_comm);
-    w3 = dimCube((nzdim+1),nydim,nxdim, &sm_win_w3, &sm_comm);
+    w1 = dimCube((nzdim+1),nydim,nxdim,bc_width, &sm_win_w1, &sm_comm);
+    w2 = dimCube((nzdim+1),nydim,nxdim,bc_width, &sm_win_w2, &sm_comm);
+    w3 = dimCube((nzdim+1),nydim,nxdim,bc_width, &sm_win_w3, &sm_comm);
 
 
     MPI_Win sm_win_tplot,sm_win_ro_u,sm_win_ro_w;

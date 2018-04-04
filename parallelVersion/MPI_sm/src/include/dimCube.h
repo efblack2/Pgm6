@@ -3,15 +3,25 @@
 #include "myMPI.h"
 #include "real.h"
 
-real*** dimCube(int level, int row, int col, MPI_Win *sm_win, MPI_Comm *sm_comm)
+real*** dimCube(int level, int row, int col, int bw, MPI_Win *sm_win, MPI_Comm *sm_comm)
 {
 
     int myRank,commSize;
     MPI_Comm_rank(*sm_comm,&myRank);
-    //MPI_Comm_size(*sm_comm,&commSize);
+    MPI_Comm_size(*sm_comm,&commSize);
 
     const int size = level  * row * col;
     real ***cube;
+
+    int zdim = level-2*bw;
+
+    int low = BLOCK_LOW (myRank,commSize,zdim)+bw;
+    int hi  = BLOCK_HIGH(myRank,commSize,zdim)+bw;
+
+    if (myRank == 0) low-=bw;
+    if (myRank == commSize-1) hi+=bw;
+
+
 
     cube       = (real ***)  malloc(  level         * sizeof(real**));
     cube[0]    = (real  **)  malloc(  level  * row  * sizeof(real*));
@@ -43,15 +53,13 @@ real*** dimCube(int level, int row, int col, MPI_Win *sm_win, MPI_Comm *sm_comm)
 
     MPI_Win_lock_all(0,*sm_win);
 
-    if (myRank==0) {
-        for (int l=0; l<level; ++l){
-            for (int r=0; r<row; ++r){
-                for (int c=0; c<col; ++c){
-                    cube[l][r][c] = 0.0;
-                } // end for //
+    for (int l=low; l<hi; ++l){
+        for (int r=0; r<row; ++r){
+            for (int c=0; c<col; ++c){
+                cube[l][r][c] = (real) 0.0;
             } // end for //
         } // end for //
-    } // end if //
+    } // end for //
 
     MPI_Win_sync(*sm_win);
     MPI_Barrier(*sm_comm);
