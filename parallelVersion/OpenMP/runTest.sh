@@ -40,7 +40,7 @@ for p in `seq 0 $((  npm1  ))`; do
     sequence+=${seqArray[p]}','
 done
 sequence=${sequence%?}
-
+export OMP_DISPLAY_ENV=true
 if [ -n "$PGI" ]; then
     echo "Pgi Compiler"
     export MP_BLIST=$sequence
@@ -52,16 +52,16 @@ elif [ -n "$INTEL_LICENSE_FILE" ]; then
     #np=15
     #npps="$(($np / $numaNodes))"
     #npm1="$(($np - 1))"
-    export OMP_PLACES=sockets
-    export OMP_PROC_BIND=true
+    export OMP_PROC_BIND=spread
+    export OMP_PLACES=core
     #export KMP_AFFINITY=scatter
     # needed to use dissabled in Blue waters
     #export KMP_AFFINITY=disabled
 else
     echo "Gnu Compiler"
-    #export OMP_PLACES=sockets
-    export GOMP_CPU_AFFINITY=$sequence
-    export OMP_PROC_BIND=true
+    export OMP_PROC_BIND=spread
+    export OMP_PLACES=core
+    #export GOMP_CPU_AFFINITY=$sequence
     #export GOMP_CPU_AFFINITY="0-$npm1"
 fi
 
