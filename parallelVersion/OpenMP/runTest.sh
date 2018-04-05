@@ -53,14 +53,14 @@ elif [ -n "$INTEL_LICENSE_FILE" ]; then
     #npps="$(($np / $numaNodes))"
     #npm1="$(($np - 1))"
     export OMP_PROC_BIND=spread
-    export OMP_PLACES=core
+    export OMP_PLACES=cores
     #export KMP_AFFINITY=scatter
     # needed to use dissabled in Blue waters
     #export KMP_AFFINITY=disabled
 else
     echo "Gnu Compiler"
     export OMP_PROC_BIND=spread
-    export OMP_PLACES=core
+    export OMP_PLACES=cores
     #export GOMP_CPU_AFFINITY=$sequence
     #export GOMP_CPU_AFFINITY="0-$npm1"
 fi
