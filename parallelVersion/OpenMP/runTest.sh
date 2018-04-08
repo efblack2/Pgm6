@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$#" -ne 2 ] 
+if [ "$#" -ne 2 ]
 then
   echo "Usage: $0 inputFile compiler"
   exit 1
@@ -13,6 +13,7 @@ tpc=`lscpu | grep "Thread(s) per core:" | awk '{}{print $4}{}'`
 np="$(($npt / $tpc))"
 npps="$(($np / $numaNodes))"
 npm1="$(($np - 1))"
+
 
 seqArray=()
 ##########################################
@@ -59,17 +60,17 @@ elif [ -n "$INTEL_LICENSE_FILE" ]; then
     #export KMP_AFFINITY=disabled
 else
     echo "Gnu Compiler"
-    export OMP_PROC_BIND=spread
-    export OMP_PLACES=cores
-    #export GOMP_CPU_AFFINITY=$sequence
-    #export GOMP_CPU_AFFINITY="0-$npm1"
+    #export OMP_PROC_BIND=spread
+    #export OMP_PLACES=sockets
+    export OMP_PROC_BIND=true
+    export GOMP_CPU_AFFINITY=$sequence
 fi
 
 rm -f openMpResult.txt
 for i in 1 `seq 2 2 $np`; do
     export OMP_NUM_THREADS=$i
     for j in  `seq 1 $nloops`; do
-        echo number of threads: $i, run number: $j 
+        echo number of threads: $i, run number: $j
         p6 $1 | grep finish >>  openMpResult.txt
     done
 done

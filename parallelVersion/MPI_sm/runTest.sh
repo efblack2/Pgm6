@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$#" -ne 2 ] 
+if [ "$#" -ne 2 ]
 then
   echo "Usage: $0 inputFile compiler"
   exit 1
@@ -8,7 +8,7 @@ fi
 nloops=3
 
 # Determining MPI implementation and binding options #
-MPI=`mpiexec --version | head -1 | awk '{print $1}' ` 
+MPI=`mpiexec --version | head -1 | awk '{print $1}' `
 
 if [ "$MPI" == "HYDRA" ]; then
     echo "MPICH"
@@ -30,6 +30,7 @@ np="$(($npt / $tpc))"
 npps="$(($np / $numaNodes))"
 npm1="$(($np - 1))"
 
+
 if [ -n "$PGI" ]; then
     echo "Pgi Compiler"
 elif [ -n "$INTEL_LICENSE_FILE" ]; then
@@ -41,11 +42,11 @@ else
     echo "Gnu Compiler"
 fi
 
-
 rm -f Mpi_sm_Result.txt
+
 for i in 1 `seq 2 2 $np`; do
     for j in  `seq 1 $nloops`; do
-        echo number of processors: $i, run number: $j 
+        echo number of processors: $i, run number: $j
         mpiexec  $bindings -n $i p6 $1 | grep finish >>  Mpi_sm_Result.txt
     done
 done
