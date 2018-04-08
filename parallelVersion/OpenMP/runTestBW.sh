@@ -53,7 +53,7 @@ for i in 1 `seq 2 2 $np`; do
     export OMP_NUM_THREADS=$i
     for j in  `seq 1 $nloops`; do
         echo number of threads: $i, run number: $j
-        p6 $1 | grep finish >>  openMpResult.txt
+        aprun -cc $sequence -n 1 -N 1 p6 $1 | grep finish >>  openMpResult.txt
     done
 done
 
