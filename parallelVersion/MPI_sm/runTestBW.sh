@@ -7,22 +7,6 @@ fi
 
 nloops=3
 
-# Determining MPI implementation and binding options #
-MPI=`mpiexec --version | head -1 | awk '{print $1}' `
-
-if [ "$MPI" == "HYDRA" ]; then
-    echo "MPICH"
-    bindings="--bind-to socket"
-    export HYDRA_TOPO_DEBUG=1
-elif [ "$MPI" == "Intel(R)" ]; then
-    echo "Intel MPI"
-    bindings="-genv I_MPI_PIN_DOMAIN=core -genv I_MPI_PIN_ORDER=scatter -genv I_MPI_DEBUG=4"
-elif [ "$MPI" == "mpiexec" ]; then
-    echo "open-mpi"
-    bindings="--bind-to core --report-bindings"
-fi
-# end of Determining MPI implementation and binding options #
-
 npt=`grep -c ^processor /proc/cpuinfo`
 numaNodes=`lscpu | grep "NUMA node(s):" | awk '{}{print $3}{}'`
 tpc=`lscpu | grep "Thread(s) per core:" | awk '{}{print $4}{}'`
