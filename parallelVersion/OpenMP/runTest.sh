@@ -60,10 +60,8 @@ elif [ -n "$INTEL_LICENSE_FILE" ]; then
     #export KMP_AFFINITY=disabled
 else
     echo "Gnu Compiler"
-    #export OMP_PROC_BIND=spread
-    #export OMP_PLACES=sockets
-    export OMP_PROC_BIND=true
-    export GOMP_CPU_AFFINITY=$sequence
+    export OMP_PROC_BIND=spread
+    export OMP_PLACES=sockets
 fi
 
 rm -f openMpResult.txt
