@@ -1,5 +1,4 @@
-build/
-buildGnu/
-buildIntel/
-buildPgi/
+# build directories #
+###################
+build*
 *.pdf
