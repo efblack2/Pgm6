@@ -76,6 +76,6 @@ done
 mkdir -p ../../../plots/PureShareMemory/$(hostname)/$2
 cat openMpResult.txt | awk '{}{print $6, $3}{}' | awk '{Prod[$1]++; min[$1]=Prod[$1]==1||min[$1]>$2?$2:min[$1]} END{ for (var in Prod) printf "%s threads: the min is %f\n", var,min[var]}'  | sort -n  > ../../../plots/PureShareMemory/$(hostname)/$2/p6_OpenMP.txt
 
-#rm openMpResult.txt
+rm openMpResult.txt
 #rm RunHistory.dat
 

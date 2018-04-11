@@ -54,6 +54,6 @@ done
 mkdir -p ../../../plots/PureShareMemory/$(hostname)/$2
 cat Mpi_sm_Result.txt | awk '{}{print $6, $3}{}' | awk '{Prod[$1]++; min[$1]=Prod[$1]==1||min[$1]>$2?$2:min[$1]} END{ for (var in Prod) printf "%s processors: the min is %f\n", var,min[var]}'  | sort -n   > ../../../plots/PureShareMemory/$(hostname)/$2/p6_MPI_sm.txt
 
-#rm Mpi_sm_Result.txt
+rm Mpi_sm_Result.txt
 #rm RunHistory.dat
 
