@@ -16,10 +16,10 @@ if [ "$MPI" == "HYDRA" ]; then
     export HYDRA_TOPO_DEBUG=1
 elif [ "$MPI" == "Intel(R)" ]; then
     echo "Intel MPI"
-    bindings="-genv I_MPI_PIN_DOMAIN=core -genv I_MPI_PIN_ORDER=scatter -genv I_MPI_DEBUG=4"
+    bindings="-genv I_MPI_PIN_DOMAIN=core -genv I_MPI_PIN_ORDER=spread -genv I_MPI_DEBUG=4"
 elif [ "$MPI" == "mpiexec" ]; then
     echo "open-mpi"
-    bindings="--bind-to core --report-bindings"
+    bindings="--bind-to core --map-by socket --report-bindings"
 fi
 # end of Determining MPI implementation and binding options #
 
