@@ -1,1 +1,1 @@
-../parallelVersion/openMP/src/include/real.h
+../parallelVersion/OpenMP/src/include/real.h

@@ -1,1 +1,1 @@
-../parallelVersion/openMP/src/include/dimCube.h
+../parallelVersion/OpenMP/src/include/dimCube.h

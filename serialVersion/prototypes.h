@@ -1,1 +1,1 @@
-../parallelVersion/openMP/src/include/prototypes.h
+../parallelVersion/OpenMP/src/include/prototypes.h
